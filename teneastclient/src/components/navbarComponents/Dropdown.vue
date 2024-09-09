@@ -9,7 +9,5 @@
 </template>
 
 <script setup>
-    import {
-        PopoverPanel
-    } from '@headlessui/vue'
+    import { PopoverPanel } from '@headlessui/vue'
 </script>
