@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SignupView from '../views/SignupView.vue'
+import CompletedFormVue from '../views/CompletedFormVue.vue'
 import { routeChangeStore } from '@/stores/routeChangeStore.js'
 
 export const router = createRouter({
@@ -18,6 +19,11 @@ export const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: SignupView
+    },
+    {
+      path: '/confirmation/:uuid',
+      name: 'confirmation',
+      component: CompletedFormVue
     }
   ]
 })

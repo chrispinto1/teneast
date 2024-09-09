@@ -24,8 +24,10 @@
       <h1 class="flex items-center justify-center text-slate-950 text-3xl font-bold">10 <span class=" ml-4 tracking-wide text-slate-950 text-3xl font-bold">EAST</span></h1>
     </div>
     <Step/>
-    <div>
-      <component :is="signupStore.stepsArray[signupStore.step - 1]"></component>
-    </div>
+    <form>
+      <div>
+        <component :is="signupStore.stepsArray[signupStore.step - 1]"></component>
+      </div>
+    </form>
   </div>
 </template>

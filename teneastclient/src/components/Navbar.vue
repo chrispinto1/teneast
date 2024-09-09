@@ -92,7 +92,7 @@
   import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
   import DropdownContainer from './navbarComponents/DropdownContainer.vue'
   import HeaderSectionName from './navbarComponents/HeaderSectionName.vue'
-  import { useUserStore } from '@/stores/user.js'
+  import { useUserStore } from '@/stores/userStore.js'
   import { routeChangeStore } from '@/stores/routeChangeStore.js'
   import router from '../router'
   const userStore = useUserStore()

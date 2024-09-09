@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'teneast',
     'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 REST_FRAMEWORK = {
@@ -51,8 +52,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-AUTH_USER_MODEL = "teneast.User"
-
+AUTH_USER_MODEL = "teneast.Investor"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
