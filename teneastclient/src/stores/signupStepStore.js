@@ -9,18 +9,19 @@ import SixthPage from '../components/signupComponents/SixthPage.vue'
 import SeventhPage from '../components/signupComponents/SeventhPage.vue'
 import EigthPage from '../components/signupComponents/EigthPage.vue'
 import NinthPage from '@/components/signupComponents/NinthPage.vue'
+import FinishedSignup from '@/components/signupComponents/FinishedSignup.vue'
 import { userStore } from './userStore.js'
 
 
 export const signupStepStore = defineStore('signupStep', () => {
   const step = ref(1)
-  const stepsArray = [FirstPage, SecondPage, ThirdPage, FourthPage, FifthPage, SixthPage, SeventhPage, EigthPage, NinthPage]
+  const stepsArray = [FirstPage, SecondPage, ThirdPage, FourthPage, FifthPage, SixthPage, SeventhPage, EigthPage, NinthPage, FinishedSignup]
   const signupFormInputs = ['firmName', 'firstName', 'lastName', 'email', 'phoneNumber', 'countryOfResidence', 'password']
   const signupFormValues = ref({})
   signupFormInputs.forEach(input => {
     signupFormValues[input] = ref('')
   })
-  const steps = ref(stepsArray.length)
+  const steps = ref(stepsArray.length - 1)
   const typeOfInvestor = ref('')
 
   function $signup(event) {

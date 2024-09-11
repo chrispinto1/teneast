@@ -20,7 +20,6 @@
     import Dropdown from './Dropdown.vue'
     import DropdownOption from './DropdownOption.vue'
     import HeaderSectionName from './HeaderSectionName.vue'
-    import { ChevronDownIcon, PhoneIcon } from '@heroicons/vue/20/solid'
+    import { ChevronDownIcon } from '@heroicons/vue/20/solid'
     const props = defineProps(['dropdownOptions', 'sectionName'])
-    console.log(props)
 </script>

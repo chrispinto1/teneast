@@ -44,13 +44,16 @@ export const router = createRouter({
   ]
 })
 
-router.afterEach((to, from) => {
+router.afterEach(async (to, from) => {
   const nonAuthRoutes = ['homepage', 'login', 'onboarding']
   const userStoreData = userStore()
-  const userAuthenticated = false
+  const userAuthenticated = userStoreData.loggedIn
   if(to.path != from.path){
     if(userAuthenticated && !nonAuthRoutes.includes(to.name)){
       router.push(to.path)
+      return 
+    }else if(userAuthenticated && nonAuthRoutes.includes(to.name)){
+      router.push('/offerings')
       return  
     }else if(nonAuthRoutes.includes(to.name)){
       router.push(to.path)

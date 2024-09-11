@@ -4,9 +4,9 @@
       <nav class="max-w-[1536px] mx-auto flex items-center justify-between p-3 lg:px-8" aria-label="Global">
         <div class="w-full flex items-center justify-between">
           <div class="flex items-center">
-            <a href="/home" class="pr-8">
+            <div @click="router.push('/', null, { shallow: true })" class="pr-8 cursor-pointer">
               <img class="h-8 w-28" src="../assets/logo.svg" alt="" />
-            </a>
+            </div>
             <template v-if="userStoreData.loggedIn">
               <div>
                 <PopoverGroup class="hidden lg:flex lg:gap-x-12">

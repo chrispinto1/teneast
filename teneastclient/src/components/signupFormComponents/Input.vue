@@ -2,7 +2,6 @@
     const props = defineProps(['label', 'type', 'userDataType'])
     import { signupStepStore } from '@/stores/signupStepStore.js'
     const signupStore = signupStepStore()
-    console.log(signupStepStore)
 </script>
 
 <template>

@@ -11,7 +11,7 @@ export const userStore = defineStore('user', () => {
   loginValuesObj['email'] = ref('')
   let userToken = ref(null)
   
-  const login = () => {
+  function login() {
     fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -24,7 +24,9 @@ export const userStore = defineStore('user', () => {
     .then(res => {
       this.loginValuesObj = {}
       if(res.token){
+        this.user = res.user
         this.userToken = res.token
+        this.loggedIn = true
         router.push('/offerings')
       }
     })
@@ -35,7 +37,7 @@ export const userStore = defineStore('user', () => {
 
   async function isAuthenticated(){
     if(!this.userToken){
-      const response = await getUserAuthToken()
+      const response = await getUserAuthToken(this)
       if(!response){
         return false
       }
@@ -48,15 +50,16 @@ export const userStore = defineStore('user', () => {
     const loggedOut = await logoutUser(this.userToken)
     this.userToken = null
     this.loggedIn = false
+    this.user = null
     router.push('/')
   }
 
-  async function getUserAuthToken() {
+  async function getUserAuthToken(userState) {
     const response = await authTokenFetch()
     if(response.token){
-      this.userToken = response.token
-      this.loggedIn = true
-      this.user = response.user
+      userState.userToken = response.token
+      userState.loggedIn = true
+      userState.user = response.user
       return true
     }
     return false
@@ -80,7 +83,8 @@ export const userStore = defineStore('user', () => {
     })
   }
 
-  const authTokenFetch = () => {
+  function authTokenFetch() {
+    console.log('auth thoken')
     return new Promise((resolve, reject) => {
       fetch('/api/get_auth_token')
       .then(response => {

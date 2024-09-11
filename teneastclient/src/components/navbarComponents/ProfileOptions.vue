@@ -28,7 +28,7 @@
                 <p>Invite a Member</p>
             </div>
             <div class="pt-4">
-                <p @click="userStoreData.logout">Sign Out</p>
+                <p class="cursor-pointer" @click="userStoreData.logout">Sign Out</p>
             </div>
         </PopoverPanel>
     </div>

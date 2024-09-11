@@ -24,10 +24,10 @@ class Signup(APIView):
             user = serializer.create(valid_data)
             if user:
                 token = Token.objects.create(user=user)
-                serializer = UserModel
+                serializer = UserSerializer(instance=user)
                 response = Response(status=status.HTTP_201_CREATED)
-                response.set_cookie(key='token', value=token, httpOnly=True)
-                response.data = {"token": token.key, 'user': user.as_dict()}
+                # response.set_cookie(key='token', value=token, httpOnly=True)
+                response.data = {"token": token.key, 'user': serializer.dataS}
                 return response
             
 class Login(APIView):
@@ -42,8 +42,8 @@ class Login(APIView):
         serializer = UserSerializer(instance=user)
         request.session['token'] = token.key
         response = Response()
-        response.set_cookie(key='token', value=token.key, expires=3000, httponly=True)
-        response.data = {'user': serializer.data}
+        # response.set_cookie(key='token', value=token.key, expires=3000, httponly=True)
+        response.data = {'user': serializer.data, 'token': token.key}
         return response
     
 class Logout(APIView):
