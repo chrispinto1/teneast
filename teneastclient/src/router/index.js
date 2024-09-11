@@ -13,7 +13,7 @@ export const router = createRouter({
   routes: [
     {
       path: '/',
-      name: '/homepage',
+      name: 'homepage',
       component: HomeView
     },
     {
@@ -40,29 +40,28 @@ export const router = createRouter({
       path: '/home',
       name: 'home',
       component: HomeLoggedInView
-    }
+    },
   ]
 })
 
-router.beforeEach(async (to, from) => {
-  // check the user store for a auth token
+router.afterEach((to, from) => {
+  const nonAuthRoutes = ['homepage', 'login', 'onboarding']
   const userStoreData = userStore()
-  console.log('in the before route top')
-  if(!userStoreData.token){
-    console.log('in the before route inner')
-    const authToken = await userStoreData.getUserAuthToken()
-    console.log(!authToken)
-    if(!authToken){
+  const userAuthenticated = false
+  if(to.path != from.path){
+    if(userAuthenticated && !nonAuthRoutes.includes(to.name)){
+      router.push(to.path)
+      return  
+    }else if(nonAuthRoutes.includes(to.name)){
+      router.push(to.path)
+      return
+    }else if(!userAuthenticated){
       router.push('/')
-      return false
+      return
     }
+    router.push('/')
+    return
   }
-  console.log('down here')
-  if(!['homepage', 'login'].includes(to.name) && userStoreData){
-    return true
-  }
-
-  router.push('/home')
 })
 
 router.afterEach((to, from) => {

@@ -52,13 +52,18 @@ class Logout(APIView):
 
     def post(self, request):
         request.user.auth_token.delete()
+        request.session['token'] = None
         return Response({'success': 'successfully logged user out'})
     
 class GetUserToken(APIView):
     permission_classes = [permissions.AllowAny]
-
     def get(self, request):
-        return Response({'token': request.session['token']})
+        token = request.session['token']
+        if not token:
+            return Response({'token': None})
+        user = Token.objects.get(key=token).user
+        serializer = UserSerializer(instance=user)
+        return Response({'token': token, 'user': serializer.data})
 
 class Offerings(APIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]

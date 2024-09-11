@@ -33,17 +33,33 @@ export const userStore = defineStore('user', () => {
     })
   }
 
+  async function isAuthenticated(){
+    if(!this.userToken){
+      const response = await getUserAuthToken()
+      if(!response){
+        return false
+      }
+      return false
+    }
+    return true
+  }
+
   async function logout() {
+    const loggedOut = await logoutUser(this.userToken)
     this.userToken = null
     this.loggedIn = false
     router.push('/')
   }
 
   async function getUserAuthToken() {
-    const authToken = await authTokenFetch()
-    this.userToken = authToken
-    this.loggedIn = true
-    return authToken
+    const response = await authTokenFetch()
+    if(response.token){
+      this.userToken = response.token
+      this.loggedIn = true
+      this.user = response.user
+      return true
+    }
+    return false
   }
 
   const logoutUser = (token) => {
@@ -67,12 +83,11 @@ export const userStore = defineStore('user', () => {
   const authTokenFetch = () => {
     return new Promise((resolve, reject) => {
       fetch('/api/get_auth_token')
-      .then(response => response.json())
       .then(response => {
-        if(response.token){
-          console.log(response.token)
-          resolve(userToken)
-        }
+        return response.json()
+      })
+      .then(response => {
+          resolve(response)
       })
       .catch(err => {
         reject(err)
@@ -80,5 +95,5 @@ export const userStore = defineStore('user', () => {
     })
   }
 
-  return { user, loggedIn, loginValuesObj, userToken, login, logout, getUserAuthToken }
+  return { user, loggedIn, loginValuesObj, userToken, login, logout, getUserAuthToken, isAuthenticated }
 })

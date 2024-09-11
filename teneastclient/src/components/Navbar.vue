@@ -20,9 +20,9 @@
             </template>
           </div>
           <template v-if="!userStoreData.loggedIn">
-            <div class="flex">
+            <div class="hidden lg:flex">
               <div class="border-yellow-600 border-dotted border px-2 py-1  mr-4">
-                <button class="px-2 py-1 flex items-center justify-center bg-gradient-to-r from-gold to-purple-400 text-xl" @click="router.push('onboarding')">Inquire</button>
+                <button class="px-2 py-1 flex items-center justify-center bg-gradient-to-r from-gold to-gold text-xl" @click="router.push('onboarding')">Inquire</button>
               </div>
               <div class="flex lg:justify-end items-center">
                 <a href="#" class="text-sm font-semibold leading-6 text-white" @click="router.push('/login')">Log in</a>
@@ -30,9 +30,16 @@
             </div>
           </template>
           <template v-if="userStoreData.loggedIn">
-            <div class="flex items-center">
+            <div class="hidden lg:flex items-center relative">
               <HeaderSectionName sectionName="Invite a Member"/>
-              <svg class="ml-6" fill="white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 45.532 45.532"xml:space="preserve"><g><path d="M22.766,0.001C10.194,0.001,0,10.193,0,22.766s10.193,22.765,22.766,22.765c12.574,0,22.766-10.192,22.766-22.765,S35.34,0.001,22.766,0.001z M22.766,6.808c4.16,0,7.531,3.372,7.531,7.53c0,4.159-3.371,7.53-7.531,7.53,c-4.158,0-7.529-3.371-7.529-7.53C15.237,10.18,18.608,6.808,22.766,6.808z M22.761,39.579c-4.149,0-7.949-1.511-10.88-4.012,c-0.714-0.609-1.126-1.502-1.126-2.439c0-4.217,3.413-7.592,7.631-7.592h8.762c4.219,0,7.619,3.375,7.619,7.592,c0,0.938-0.41,1.829-1.125,2.438C30.712,38.068,26.911,39.579,22.761,39.579z"/></g></svg>
+              <PopoverGroup>
+                <Popover>
+                  <PopoverButton>
+                    <svg  @click="loggedInModal = true" class="ml-6 cursor-pointer outline-none border-none" fill="white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 45.532 45.532"xml:space="preserve"><g><path d="M22.766,0.001C10.194,0.001,0,10.193,0,22.766s10.193,22.765,22.766,22.765c12.574,0,22.766-10.192,22.766-22.765,S35.34,0.001,22.766,0.001z M22.766,6.808c4.16,0,7.531,3.372,7.531,7.53c0,4.159-3.371,7.53-7.531,7.53,c-4.158,0-7.529-3.371-7.529-7.53C15.237,10.18,18.608,6.808,22.766,6.808z M22.761,39.579c-4.149,0-7.949-1.511-10.88-4.012,c-0.714-0.609-1.126-1.502-1.126-2.439c0-4.217,3.413-7.592,7.631-7.592h8.762c4.219,0,7.619,3.375,7.619,7.592,c0,0.938-0.41,1.829-1.125,2.438C30.712,38.068,26.911,39.579,22.761,39.579z"/></g></svg>
+                  </PopoverButton>
+                  <ProfileOptions />
+                </Popover>
+              </PopoverGroup>
             </div>
           </template>
           <div class="flex lg:hidden">
@@ -45,7 +52,7 @@
           </div>
         </div>
       </nav>
-      <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+      <!-- <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
         <div class="fixed inset-0 z-10" />
         <DialogPanel class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div class="flex items-center justify-between">
@@ -80,24 +87,24 @@
             </div>
           </div>
         </DialogPanel>
-      </Dialog>
+      </Dialog> -->
     </header>
   </template>
   </template>
   
   <script setup>
   import { ref, computed } from 'vue'
-  import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel, PopoverGroup} from '@headlessui/vue'
+  import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel, PopoverGroup, PopoverButton, Popover } from '@headlessui/vue'
   import { XMarkIcon } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
   import DropdownContainer from './navbarComponents/DropdownContainer.vue'
   import HeaderSectionName from './navbarComponents/HeaderSectionName.vue'
+  import ProfileOptions from './navbarComponents/ProfileOptions.vue'
   import { userStore } from '@/stores/userStore.js'
   import { routeChangeStore } from '@/stores/routeChangeStore.js'
   import router from '../router'
   const userStoreData = userStore()
   const routeStore = routeChangeStore()
-  console.log(userStoreData.loggedIn)
   
   const callsToAction = [
     { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
@@ -105,4 +112,5 @@
   ]
   
   const mobileMenuOpen = ref(false)
+  const loggedInModal = ref(false)
   </script>
