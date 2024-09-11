@@ -4,18 +4,62 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from django.contrib.auth.models import User
-from .serializer import UserSignupSerializer
+from django.contrib.auth import get_user_model
+from .serializer import UserSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
+UserModel = get_user_model()
 
 class Signup(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         valid_data = request.data
-        serializer = UserSignupSerializer(data=valid_data)
+        serializer = UserSerializer(data=valid_data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.create(valid_data)
             if user:
                 token = Token.objects.create(user=user)
-                return Response({"token": token.key, 'user': user.as_dict()}, status=status.HTTP_201_CREATED)
+                serializer = UserModel
+                response = Response(status=status.HTTP_201_CREATED)
+                response.set_cookie(key='token', value=token, httpOnly=True)
+                response.data = {"token": token.key, 'user': user.as_dict()}
+                return response
+            
+class Login(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        valid_data = request.data
+        user = get_object_or_404(UserModel, username=valid_data["email"])
+        if not user.check_password(valid_data['password']):
+            return Response({"error": "Please check your email or password"}, status=status.HTTP_404_not_found)
+        token, created = Token.objects.get_or_create(user=user)
+        serializer = UserSerializer(instance=user)
+        request.session['token'] = token.key
+        response = Response()
+        response.set_cookie(key='token', value=token.key, expires=3000, httponly=True)
+        response.data = {'user': serializer.data}
+        return response
+    
+class Logout(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response({'success': 'successfully logged user out'})
+    
+class GetUserToken(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        return Response({'token': request.session['token']})
+
+class Offerings(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]

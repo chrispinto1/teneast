@@ -9,7 +9,7 @@ import SixthPage from '../components/signupComponents/SixthPage.vue'
 import SeventhPage from '../components/signupComponents/SeventhPage.vue'
 import EigthPage from '../components/signupComponents/EigthPage.vue'
 import NinthPage from '@/components/signupComponents/NinthPage.vue'
-import { useUserStore } from './userStore.js'
+import { userStore } from './userStore.js'
 
 
 export const signupStepStore = defineStore('signupStep', () => {
@@ -39,9 +39,9 @@ export const signupStepStore = defineStore('signupStep', () => {
     .then(res => {
       if(res.token){
         this.step = this.step + 1
-        const userStore = useUserStore()
-        userStore.user = res.user
-        userStore.loggedIn = true
+        const userStoreData = userStore()
+        userStoreData.user = res.user
+        userStoreData.loggedIn = true
       }
     })
     .catch(err => {

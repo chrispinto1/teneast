@@ -1,36 +1,73 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SignupView from '../views/SignupView.vue'
-import CompletedFormVue from '../views/CompletedFormVue.vue'
+import CompletedFormView from '../views/CompletedFormView.vue'
+import LoginView from '../views/LoginView.vue'
+import OfferingView from '../views/OfferingView.vue'
+import HomeLoggedInView from '../views/HomeLoggedInView.vue'
 import { routeChangeStore } from '@/stores/routeChangeStore.js'
+import { userStore } from '@/stores/userStore.js'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: '/homepage',
       component: HomeView
     },
     {
       path: '/onboarding',
       name: 'onboarding',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: SignupView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/offerings',
+      name: 'offerings',
+      component: OfferingView
     },
     {
       path: '/confirmation/:uuid',
       name: 'confirmation',
-      component: CompletedFormVue
+      component: CompletedFormView
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomeLoggedInView
     }
   ]
 })
 
+router.beforeEach(async (to, from) => {
+  // check the user store for a auth token
+  const userStoreData = userStore()
+  console.log('in the before route top')
+  if(!userStoreData.token){
+    console.log('in the before route inner')
+    const authToken = await userStoreData.getUserAuthToken()
+    console.log(!authToken)
+    if(!authToken){
+      router.push('/')
+      return false
+    }
+  }
+  console.log('down here')
+  if(!['homepage', 'login'].includes(to.name) && userStoreData){
+    return true
+  }
+
+  router.push('/home')
+})
+
 router.afterEach((to, from) => {
   const routeStore = routeChangeStore()
-  if(to.name === "onboarding"){
+  if(["onboarding", 'login'].includes(to.name)){
     routeStore.includeNavBar = false
   }else if(!routeStore.includeNavBar){
     routeStore.includeNavBar = true

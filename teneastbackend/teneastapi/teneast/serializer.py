@@ -4,10 +4,10 @@ from .models import Investor
 
 UserModel = get_user_model()
 
-class UserSignupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserModel
-        fields = ['email', 'password', 'username']
+class UserSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = Investor
+        fields = ['email', 'username', 'first_name', 'last_name']
     
     def create(self, valid_data):
         if Investor.objects.filter(email=valid_data["email"]).exists():
