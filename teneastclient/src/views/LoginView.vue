@@ -19,8 +19,8 @@
                     <label class="mb-1 text-m text-slate-700 font-semibold">EMAIL</label>
                     <input @input="(event) => userStoreData.loginValuesObj['email'] = event.target.value" class="border border-slate-400 w-72 h-10 px-3 mb-5" type="text">
                     <label class="mb-1 text-m text-slate-700 font-semibold">PASSWORD</label>
-                    <input @input="(event) => userStoreData.loginValuesObj['password'] = event.target.value" class="border border-slate-400 w-72 h-10 px-3" type="password">
-                    <button class="py-2" type="submit">Sign In</button>
+                    <input @input="(event) => userStoreData.loginValuesObj['password'] = event.target.value" class="border border-slate-400 w-72 h-10 px-3 mb-5" type="password">
+                    <button class="py-2 bg-yellow-600 rounded-lg text-white" type="submit">Sign In</button>
                 </form>
                 <p class="mb-5 text-amber-600 cursor-pointer">Forgot your password?</p>
                 <p class="mb-5">Don't have an account? <span @click="router.push('/onboarding')" class="text-amber-600 cursor-pointer">Request Access</span></p>
