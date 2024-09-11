@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import router from '@/router';
+import { signupStepStore } from '@/stores/signupStepStore.js'
+const signupData = signupStepStore()
+
+function handleFinsihedSignup(){
+    signupData.step = 1
+    router.push('/')
+}
 </script>
 
 <template>
@@ -13,5 +20,5 @@ import router from '@/router';
         <p class="text-lg text-black mb-10">A member of our team will contact you soon.</p>
         <p class="text-lg text-black mb-10">Thank you for your interest in 10 East.</p>
     </div>
-    <button @click="router.push('/')" class="w-fit px-5 py-2 bg-yellow-600 rounded-lg text-white float-right">Bact to 10 East ></button>
+    <button @click="handleFinsihedSignup" class="w-fit px-5 py-2 bg-yellow-600 rounded-lg text-white float-right">Bact to 10 East ></button>
 </template>

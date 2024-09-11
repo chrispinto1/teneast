@@ -11,10 +11,17 @@
         <div class="bg-slate-800 p-5 text-center w-72">
             <p class="text-white text-xl mb-5">Consolidated return on historical investments 9</p>
             <div class="flex justify-between mb-5">
-                <p class="text-white flex flex-col"><span class="text-yellow-600 text-2xl">21.0%</span> Net IRR10</p>
-                <p class="text-white flex flex-col"><span class="text-yellow-600 text-2xl">1.70x</span> Net MOIC</p>
+                <p class="text-white flex flex-col"><span class="text-yellow-600 text-3xl">21.0%</span> Net IRR10</p>
+                <p class="text-white flex flex-col"><span class="text-yellow-600 text-3xl">1.70x</span> Net MOIC</p>
             </div>
             <p class="text-slate-600"> as of 12/31/23</p>
         </div>
+    </div>
+    <div>
+        <p>Schedule a call</p>
+    </div>
+    <div>
+        <h1>Current Offerings</h1>
+        
     </div>
 </template>

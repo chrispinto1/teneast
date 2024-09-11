@@ -48,7 +48,7 @@ class Investment(models.Model):
     target_net_irr = models.CharField(max_length=50)
     estimated_term = models.CharField(max_length=50)
     minimum_investment = models.CharField(max_length=50)
-    subscription_deadline = models.DateField(max_length=50)
+    # subscription_deadline = models.DateField(max_length=50)
     estimated_term = models.CharField(max_length=100)
     overview = models.TextField()
 

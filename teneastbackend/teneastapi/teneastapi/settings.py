@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'teneast',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_seed',
 ]
+
+USE_TZ = False
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
