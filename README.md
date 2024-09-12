@@ -8,5 +8,5 @@ docker-compose up -d
 
 #Future Development
 
-###1. A more efficient User Authentication and User token storage
+###1. A more secure User Authentication and User token storage
 ###2. More model setup to add in more of the views seen in the frontend
