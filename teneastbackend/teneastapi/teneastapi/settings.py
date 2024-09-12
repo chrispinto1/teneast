@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'teneast',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_seed',
 ]
 
 USE_TZ = False
