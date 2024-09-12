@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col w-[1325px]">
+  <div class="flex flex-col w-[1325px] lg:w-3/4">
     <div class="grid grid-cols-3 h-24">
       <div class="flex items-center">
         <template v-if="signupStore.step < signupStore.steps">

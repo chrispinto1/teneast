@@ -6,7 +6,7 @@
 
 <template>
     <div class="h-screen bg-slate-50">
-        <div class="w-[1450px] flex flex-col items-center m-auto ">
+        <div class="w-[1450px] lg:w-3/4 flex flex-col items-center m-auto ">
             <div class="w-full">
                 <svg @click="router.push('/')" xmlns="http://www.w3.org/2000/svg" class="size-6 cursor-pointer h-24 mb-24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />

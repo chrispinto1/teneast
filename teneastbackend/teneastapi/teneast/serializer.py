@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
-from .models import Investor
+from .models import Investor, Investment
 
 UserModel = get_user_model()
 
@@ -14,5 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("User Already exists.")
         
         user_obj = Investor.objects.create_user(email=valid_data["email"], password=valid_data["password"])
+        user_obj["first_name"] = valid_data["first_name"]
+        user_obj["last_name"] = valid_data["last_name"]
         user_obj.save()
         return user_obj
+
+class InvestmentSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = Investment
+        fields = '__all__'

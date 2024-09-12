@@ -93,10 +93,9 @@
   </template>
   
   <script setup>
-  import { ref, computed } from 'vue'
-  import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel, PopoverGroup, PopoverButton, Popover } from '@headlessui/vue'
-  import { XMarkIcon } from '@heroicons/vue/24/outline'
-  import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+  import { ref } from 'vue'
+  import { PopoverGroup, PopoverButton, Popover } from '@headlessui/vue'
+  import { PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
   import DropdownContainer from './navbarComponents/DropdownContainer.vue'
   import HeaderSectionName from './navbarComponents/HeaderSectionName.vue'
   import ProfileOptions from './navbarComponents/ProfileOptions.vue'
@@ -105,11 +104,6 @@
   import router from '../router'
   const userStoreData = userStore()
   const routeStore = routeChangeStore()
-  
-  const callsToAction = [
-    { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-    { name: 'Contact sales', href: '#', icon: PhoneIcon },
-  ]
   
   const mobileMenuOpen = ref(false)
   const loggedInModal = ref(false)
