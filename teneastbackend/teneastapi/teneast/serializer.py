@@ -13,9 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
         if Investor.objects.filter(email=valid_data["email"]).exists():
             raise serializers.ValidationError("User Already exists.")
         
-        user_obj = Investor.objects.create_user(email=valid_data["email"], password=valid_data["password"])
-        user_obj["first_name"] = valid_data["first_name"]
-        user_obj["last_name"] = valid_data["last_name"]
+        user_obj = Investor.objects.create_user(
+            email=valid_data["email"], 
+            password=valid_data["password"],
+            )
         user_obj.save()
         return user_obj
 

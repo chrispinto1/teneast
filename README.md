@@ -8,6 +8,5 @@ docker-compose up -d
 
 #Future Development
 
-###1. Add in the investments to the login landing page
-###2. A more efficient User Authentication and User token storage
-###3. More model setup to add in more of the views seen in the frontend
+###1. A more efficient User Authentication and User token storage
+###2. More model setup to add in more of the views seen in the frontend

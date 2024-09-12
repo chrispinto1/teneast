@@ -9,8 +9,8 @@
         <h1 class="text-4xl font-semibold mb-8">Let us know how to contact you.</h1>
         <Input type="text" label="FIRM NAME" userDataType="firmName"/>
         <div class="flex">
-            <Input type="text" label="FIRST NAME" userDataType="firstName"/>
-            <Input type="text" label="LAST NAME" userDataType="lastName"/>
+            <Input type="text" label="FIRST NAME" userDataType="first_name"/>
+            <Input type="text" label="LAST NAME" userDataType="last_name"/>
         </div>
         <p class="hidden text-red-700 mb-5 email-error">Please enter a valid email</p>
         <Input type="text" label="EMAIL" userDataType="email"/>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="flex mb-8">
-            <input type="checkbox" class="mr-4 agree-checkbox">
+            <input type="checkbox" @input="(event) => signupStore.handleInput(event, 'agree')" class="mr-4 agree-checkbox" userDataType="agree">
             <p>I agree to 10 East's <span class="text-amber-600">Non-Disclosure Agreement</span>, <span class="text-amber-600">Terms of Use</span>, and <span class="text-amber-600">Privacy Policy</span>.</p>
         </div>
         <button @click="(event) => signupStore.$signup(event)" class="rounded-lg bg-yellow-600 py-3 px-6 text-white submit-button disabled:opacity-60" type="submit" disabled>Next</button>

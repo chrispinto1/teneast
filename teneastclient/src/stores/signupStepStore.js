@@ -16,9 +16,9 @@ import { userStore } from './userStore.js'
 export const signupStepStore = defineStore('signupStep', () => {
   const step = ref(1)
   const stepsArray = [FirstPage, SecondPage, ThirdPage, FourthPage, FifthPage, SixthPage, SeventhPage, EigthPage, NinthPage, FinishedSignup]
-  const signupFormInputs = ['firmName', 'firstName', 'lastName', 'email', 'phoneNumber', 'countryOfResidence', 'password']
+  const signupFormInputs = ref(['firmName', 'first_name', 'last_name', 'email', 'phoneNumber', 'countryOfResidence', 'password', 'confirmPassword', 'agree'])
   const signupFormValues = ref({})
-  signupFormInputs.forEach(input => {
+  signupFormInputs.value.forEach(input => {
     signupFormValues[input] = ref('')
   })
   const steps = ref(stepsArray.length - 1)
@@ -51,5 +51,66 @@ export const signupStepStore = defineStore('signupStep', () => {
     })
   }
 
-  return { step, steps, stepsArray, typeOfInvestor, signupFormValues, $signup }
+    function handleInput(event, userDataType){
+      this.signupFormValues[userDataType] = event.target.value
+      let allFieldsEntered = false
+      const keys = this.signupFormInputs
+      for(let i = 0;i < keys.length;i++){
+          if(!this.signupFormValues[keys[i]]){
+              allFieldsEntered = false
+              break
+          }
+          if(i === keys.length - 1){
+              allFieldsEntered = true
+          }
+      }
+      console.log(userDataType)
+      if(userDataType === 'email'){
+        validateEmail(this.signupFormValues.email)
+      }else if(userDataType === "password" || userDataType === "confirmPassword"){
+        validatePassword(this.signupFormValues.password, this.signupFormValues.confirmPassword)
+      }
+      console.log(allFieldsEntered)
+      if(allFieldsEntered){
+        const emailValid = validateEmail(this.signupFormValues.email)
+        const passwordsMatch = validatePassword(this.signupFormValues.password, this.signupFormValues.confirmPassword)
+        const submitButton = document.querySelector('.submit-button')
+        console.log(emailValid, passwordsMatch)
+        if(!emailValid && !passwordsMatch){
+          console.log('not disabled')
+          submitButton.disabled = false
+        }else{
+          console.log('disabled')
+          submitButton.disabled = true
+        }
+      }
+    }
+
+    function validateEmail(emailValue){
+      const emailErrorEl = document.querySelector('.email-error')
+      let validEmailError
+      if(!emailValue.match(/[a-zA-Z0-9]*@[a-z]*.com/)){
+          emailErrorEl.classList.remove('hidden')
+          validEmailError = true
+      }else{
+          emailErrorEl.classList.add('hidden')
+          validEmailError = false
+      }
+      return validEmailError
+    }
+
+    function validatePassword(passwordValue, confirmationValue){
+      let passwordError
+      const passwordInputContainer = document.querySelector('.passwords')
+      if((passwordValue && confirmationValue) && (passwordValue != confirmationValue)){
+          passwordInputContainer.querySelector('p').classList.remove('hidden')
+          passwordError = true
+      }else{
+          passwordInputContainer.querySelector('p').classList.add('hidden')
+          passwordError = false
+      }
+
+      return passwordError
+    }
+  return { step, steps, stepsArray, typeOfInvestor, signupFormValues, signupFormInputs, $signup, handleInput, validateEmail, validatePassword}
 })
