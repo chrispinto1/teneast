@@ -12,18 +12,22 @@
             <Input type="text" label="FIRST NAME" userDataType="firstName"/>
             <Input type="text" label="LAST NAME" userDataType="lastName"/>
         </div>
+        <p class="hidden text-red-700 mb-5 email-error">Please enter a valid email</p>
         <Input type="text" label="EMAIL" userDataType="email"/>
         <Input type="text" label="PHONE NUMBER" userDataType="phoneNumber"/>
         <Input type="text" label="COUNTRY OF RESIDENCE" userDataType="countryOfResidence"/>
         <h1 class="text-3xl font-semibold mb-8">Create a password for your account</h1>
-        <div class="flex">
-            <Input type="password" label="PASSWORD" userDataType="password"/>
-            <Input type="password" label="CONFIRM PASSWORD" userDataType="confirmPassword"/>
+        <div class="flex flex-col passwords">
+            <p class="hidden text-red-700 mb-5">The passwords entered do not match</p>
+            <div class="flex">
+                <Input type="password" label="PASSWORD" userDataType="password"/>
+                <Input type="password" label="CONFIRM PASSWORD" userDataType="confirmPassword"/>
+            </div>
         </div>
         <div class="flex mb-8">
-            <input type="checkbox" class="mr-4">
+            <input type="checkbox" class="mr-4 agree-checkbox">
             <p>I agree to 10 East's <span class="text-amber-600">Non-Disclosure Agreement</span>, <span class="text-amber-600">Terms of Use</span>, and <span class="text-amber-600">Privacy Policy</span>.</p>
         </div>
-        <button @click="(event) => signupStore.$signup(event)" class="rounded-lg bg-yellow-600 py-3 px-6 text-white" type="submit">Next</button>
+        <button @click="(event) => signupStore.$signup(event)" class="rounded-lg bg-yellow-600 py-3 px-6 text-white submit-button disabled:opacity-60" type="submit" disabled>Next</button>
     </form>
 </template>
